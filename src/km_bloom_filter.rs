@@ -104,6 +104,32 @@ where
         }
     }
 
+    pub fn load(number_of_hashers: usize, bits_per_hasher: usize, bitset: Vec<u8>) -> Option<Self> {
+        let expected_len = bits_per_hasher * number_of_hashers;
+        if bitset.len() != expected_len && bitset.len() != expected_len + 1 {
+            None
+        } else {
+            Some(Self {
+                bitset: Bitset::from(bitset),
+                number_of_hashers,
+                bits_per_hasher,
+                _phantom: PhantomData,
+            })
+        }
+    }
+
+    pub fn number_of_hashers(&self) -> usize {
+        self.number_of_hashers
+    }
+
+    pub fn bits_per_hasher(&self) -> usize {
+        self.bits_per_hasher
+    }
+
+    pub fn bitset(&self) -> &[u8] {
+        self.bitset.as_ref()
+    }
+
     /// Approximate number of elements stored.
     /// Approximation technique taken from Wikipedia:
     /// > Wikipedia, ["Bloom filter"](https://en.wikipedia.org/wiki/Bloom_filter#Approximating_the_number_of_items_in_a_Bloom_filter) [Accessed: 02.12.2020]

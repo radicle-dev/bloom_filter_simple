@@ -107,6 +107,21 @@ impl Debug for Bitset {
     }
 }
 
+impl AsRef<[u8]> for Bitset {
+    fn as_ref(&self) -> &[u8] {
+        &self.bytes
+    }
+}
+
+impl From<Vec<u8>> for Bitset {
+    fn from(v: Vec<u8>) -> Self {
+        Self {
+            length: v.len(),
+            bytes: v,
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
