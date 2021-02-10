@@ -106,7 +106,7 @@ where
 
     pub fn load(number_of_hashers: usize, bits_per_hasher: usize, bitset: Vec<u8>) -> Option<Self> {
         let expected_len = bits_per_hasher * number_of_hashers;
-        if bitset.len() != expected_len && bitset.len() != expected_len + 1 {
+        if bitset.len() != expected_len || bitset.len() != expected_len + 1 {
             None
         } else {
             Some(Self {
@@ -163,9 +163,9 @@ where
     ///
     /// Panics if the desired capacity or desired false positive probability of 'self' and 'other'
     /// differ.
-    /// 
+    ///
     /// # Examples
-    /// 
+    ///
     /// Union of two bloom filters with the same configuration.
     /// ```
     /// use bloom_filter_simple::{BloomFilter,KMBloomFilter};
@@ -177,29 +177,29 @@ where
     ///     let desired_capacity = 10_000;
     ///     let desired_fp_probability = 0.0001;
     ///
-    ///     // We initialize two new KMBloomFilter 
+    ///     // We initialize two new KMBloomFilter
     ///     let mut filter_one: KMBloomFilter<AHasher, DefaultHasher> = KMBloomFilter::new(
     ///         desired_capacity,
     ///         desired_fp_probability
     ///     );
-    /// 
+    ///
     ///     let mut filter_two: KMBloomFilter<AHasher, DefaultHasher> = KMBloomFilter::new(
     ///         desired_capacity,
     ///         desired_fp_probability
     ///     );
-    /// 
+    ///
     ///     // Insert elements into the first filter
     ///     filter_one.insert(&0);
     ///     filter_one.insert(&1);
-    /// 
+    ///
     ///     // Insert elements into the second filter
     ///     filter_two.insert(&2);
     ///     filter_two.insert(&3);
-    ///     
+    ///
     ///     // Now we retrieve the union of both filters
     ///     let filter_union = filter_one.union(&filter_two);
     ///
-    ///     // The union will return true for a 'contains' check for the elements inserted 
+    ///     // The union will return true for a 'contains' check for the elements inserted
     ///     // previously into at least one of the constituent filters.
     ///     assert_eq!(true, filter_union.contains(&0));
     ///     assert_eq!(true, filter_union.contains(&1));
@@ -233,9 +233,9 @@ where
     ///
     /// Panics if the desired capacity or desired false positive probability of 'self' and 'other'
     /// differ.
-    /// 
+    ///
     /// # Examples
-    /// 
+    ///
     /// Intersection of two bloom filters with the same configuration.
     /// ```
     /// use bloom_filter_simple::{BloomFilter,KMBloomFilter};
@@ -247,29 +247,29 @@ where
     ///     let desired_capacity = 10_000;
     ///     let desired_fp_probability = 0.0001;
     ///
-    ///     // We initialize two new KMBloomFilter 
+    ///     // We initialize two new KMBloomFilter
     ///     let mut filter_one: KMBloomFilter<AHasher, DefaultHasher> = KMBloomFilter::new(
     ///         desired_capacity,
     ///         desired_fp_probability
     ///     );
-    /// 
+    ///
     ///     let mut filter_two: KMBloomFilter<AHasher, DefaultHasher> = KMBloomFilter::new(
     ///         desired_capacity,
     ///         desired_fp_probability
     ///     );
-    /// 
+    ///
     ///     // Insert elements into the first filter
     ///     filter_one.insert(&0);
     ///     filter_one.insert(&1);
-    /// 
+    ///
     ///     // Insert elements into the second filter
     ///     filter_two.insert(&1);
     ///     filter_two.insert(&2);
-    ///     
+    ///
     ///     // Now we retrieve the intersection of both filters
     ///     let filter_intersection = filter_one.intersect(&filter_two);
     ///
-    ///     // The intersection will return true for a 'contains' check for the elements inserted 
+    ///     // The intersection will return true for a 'contains' check for the elements inserted
     ///     // previously into both constituent filters.
     ///     assert_eq!(false, filter_intersection.contains(&0));
     ///     assert_eq!(true, filter_intersection.contains(&1));
